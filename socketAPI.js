@@ -7,7 +7,7 @@ io.on('connection', (socket) => {
 
     socket.on('chat message', (data) => {
         console.log('message: ' + data);
-        io.emit('io to client', data);
+        socket.broadcast.emit('io to client', data);
     });
 
     socket.on('disconnect', () => {
