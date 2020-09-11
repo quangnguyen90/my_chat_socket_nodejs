@@ -1,9 +1,21 @@
 let socketIO = require('socket.io');
 let io = socketIO();
 let socketAPI = {};
+//var listMembers = [];
 //Your socket logic here
 io.on('connection', (socket) => {
     console.log('a user connected');
+
+    // socket is socketID
+    // save socket {
+    //     nickname: Quang,
+    //     socket: socket
+    // }
+
+    // listMembers.push({
+    //     nickname: Quang,
+    //     socket: socket
+    // })
 
     socket.on('chat message', (data) => {
         console.log('message: ' + data);
