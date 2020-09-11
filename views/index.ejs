@@ -9,8 +9,20 @@
       form input { border: 0; padding: 10px; width: 90%; margin-right: 0.5%; }
       form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
       #messages { list-style-type: none; margin: 0; padding: 0; }
-      #messages li { padding: 5px 10px; }
-      #messages li:nth-child(odd) { background: #eee; }
+      #messages li { 
+          width: 500px;
+          background: lightsalmon;
+          border-radius: 20px 0px 0px 20px;
+          padding: 5px 5px;
+      }
+      .sent {
+          background: skyblue !important;
+          border-radius: 0px 20px 20px 0px !important;
+          float: left;
+      }
+      .clear-both {
+          clear: both;
+      }
     </style>
   </head>
   <body>
@@ -25,14 +37,19 @@
     $(function () {
       var socket = io();
       $('form').submit(function(e) {
+        var msg = $('#m').val();
         e.preventDefault(); // prevents page reloading
         socket.emit('chat message', $('#m').val());
+        // add message immediately & sender
+        $('#messages').append($('<li class="sent">').text(msg));
+        $('#messages').append('<div class="clear-both"></div');
         $('#m').val('');
         return false;
       });
 
       socket.on('io to client', function(msg){
-        $('#messages').append($('<li>').text(msg));
+        $('#messages').append($('<li style="float:right">').text(msg));
+        $('#messages').append('<div class="clear-both"></div');
       });
 
     });
