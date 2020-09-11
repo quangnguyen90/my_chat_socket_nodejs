@@ -26,6 +26,7 @@
     </style>
   </head>
   <body>
+    Nick name:<input id="nickname" autocomplete="off" />
     <ul id="messages"></ul>
     <form action="">
       <input id="m" autocomplete="off" /><button>Send</button>
@@ -38,17 +39,22 @@
       var socket = io();
       $('form').submit(function(e) {
         var msg = $('#m').val();
+        var nickname = $('#nickname').val();
         e.preventDefault(); // prevents page reloading
-        socket.emit('chat message', $('#m').val());
+        socket.emit('chat message', {
+          nickname: nickname,
+          msg: msg
+        });
         // add message immediately & sender
-        $('#messages').append($('<li class="sent">').text(msg));
+        $('#messages').append($('<li class="sent">').text(nickname + ' : ' + msg));
         $('#messages').append('<div class="clear-both"></div');
+
         $('#m').val('');
         return false;
       });
 
-      socket.on('io to client', function(msg){
-        $('#messages').append($('<li style="float:right">').text(msg));
+      socket.on('io to client', function(data) {
+        $('#messages').append($('<li style="float:right">').text(data.nickname + ' : ' + data.msg));
         $('#messages').append('<div class="clear-both"></div');
       });
 
