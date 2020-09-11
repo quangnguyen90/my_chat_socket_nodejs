@@ -20,10 +20,16 @@
     </form>
   </body>
   <script src="/socket-lib/socket.io.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script>
-    var socket = io('http://localhost:3000');
-    // socket.on('connect', function(){});
-    // socket.on('event', function(data){});
-    // socket.on('disconnect', function(){});
+    $(function () {
+      var socket = io();
+      $('form').submit(function(e) {
+        e.preventDefault(); // prevents page reloading
+        socket.emit('chat message', $('#m').val());
+        $('#m').val('');
+        return false;
+      });
+    });
   </script>
 </html>

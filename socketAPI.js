@@ -4,6 +4,11 @@ let socketAPI = {};
 //Your socket logic here
 io.on('connection', (socket) => {
     console.log('a user connected');
+
+    socket.on('chat message', (data) => {
+        console.log('message: ' + data);
+    });
+
     socket.on('disconnect', () => {
         console.log('user disconnected');
     });
